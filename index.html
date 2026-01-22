@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#1a0510" />
+    <title>Forever & Always ❤</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap"
+      rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <canvas id="starCanvas"></canvas>
+    <div class="vinyl-player">
+      <div class="vinyl-disc" id="vinylBtn" onclick="toggleMusic()">
+        <i class="fas fa-music" style="color: #555; font-size: 10px"></i>
+      </div>
+      <i class="fas fa-music note" id="note1"></i>
+      <i
+        class="fas fa-music note"
+        id="note2"
+        style="animation-delay: 0.5s; right: -10px; top: -20px"></i>
+    </div>
+    <audio id="bgm" loop>
+      <source src="assets/lagu.mp3" type="audio/mpeg" />
+    </audio>
+    <main>
+      <section id="countdown" class="active">
+        <div style="text-align: center; margin-top: -50px">
+          <i
+            class="fas fa-hourglass-half"
+            style="
+              font-size: 2.5rem;
+              color: var(--gold);
+              margin-bottom: 20px;
+            "></i>
+          <h1>Hai sayangku mbull, ini buat kamu cintaku</h1>
+          <p>
+            Selamat bertambah usia yang ke 20 ya sayangg, maaf konsepnya simple
+            hehe, ini bisa dibuka pas hari ultahmu sayanggg
+          </p>
+
+          <div class="timer-box">
+            <div class="time-unit">
+              <span class="time-val" id="d">00</span>
+              <span class="time-label">HARI</span>
+            </div>
+            <div class="time-unit">
+              <span class="time-val" id="h">00</span>
+              <span class="time-label">JAM</span>
+            </div>
+            <div class="time-unit">
+              <span class="time-val" id="m">00</span>
+              <span class="time-label">MENIT</span>
+            </div>
+            <div class="time-unit">
+              <span class="time-val" id="s">00</span>
+              <span class="time-label">DETIK</span>
+            </div>
+          </div>
+          <button id="goLockBtn" style="display: none" onclick="next('lock')">
+            Buka <i class="fas fa-heart"></i>
+          </button>
+        </div>
+      </section>
+      <section id="lock">
+        <div class="lock-container">
+          <h2 style="margin-bottom: 30px">
+            <i class="fas fa-lock" style="color: var(--gold)"></i> Kunci Cintaku
+          </h2>
+          <p style="margin-bottom: 20px">
+            Masukkan tanggal sama bulan sayangku
+          </p>
+          <input
+            type="number"
+            id="pass"
+            placeholder="••••"
+            maxlength="4"
+            oninput="if(this.value.length>4) this.value=this.value.slice(0,4)" />
+          <p id="err" class="error-msg">Kode salah sayang...</p>
+          <button onclick="checkPass()">
+            Buka Amplop <i class="fas fa-key"></i>
+          </button>
+        </div>
+      </section>
+      <section id="envelope">
+        <h2 style="margin-bottom: 20px; margin-top: -80px">
+          Spesial buat kamu sayang
+        </h2>
+        <div class="envelope-container" id="env" onclick="openEnv()">
+          <div class="envelope-flap"></div>
+          <div class="envelope-body">
+            <div class="letter-inside">
+              <br />
+              For My Love
+            </div>
+            <div class="seal"><i class="fas fa-heart"></i></div>
+          </div>
+        </div>
+        <p style="opacity: 0.7; font-size: 0.9rem; margin-top: 20px">
+          Klik amplop untuk membuka
+        </p>
+      </section>
+      <section id="story-section">
+        <div class="progress-bar-wrap">
+          <div class="progress-fill" id="prog"></div>
+        </div>
+        <div class="glass-panel">
+          <div class="story-card active" id="tab0">
+            <h2>Awal Pertemuan</h2>
+            <p class="story-quote">
+              "Saat pertama kali aku kenal kamu, aku kira hanya pertemuan
+              singkat, tapi ternyata saat ini kamu menjadi peran paling penting
+              dan alasan bahagia untukku, mau sesulit apa nanti cobaannya i will
+              survive and keep fighting for you, i love you sayangku..."
+            </p>
+            <div class="gallery-grid">
+              <div class="polaroid-item">
+                <img src="assets/foto1.jpeg" alt="Foto 1" />
+              </div>
+              <div class="polaroid-item">
+                <img src="assets/foto2.jpeg" alt="Foto 2" />
+              </div>
+              <div class="polaroid-item">
+                <img src="assets/foto3.png" alt="Foto 3" />
+              </div>
+              <div class="polaroid-item">
+                <img src="assets/foto4.jpg" alt="Foto 4" />
+              </div>
+              <div class="polaroid-item">
+                <img src="assets/foto5.jpeg" alt="Foto 5" />
+              </div>
+            </div>
+          </div>
+          <div class="story-card" id="tab1">
+            <h2>U're perfect</h2>
+            <p class="story-quote">
+              "Duniaku seringkali bising, namun saat aku menatap matamu yang
+              teduh, seketika semuanya terasa tenang. Ada sihir dalam senyumanmu
+              yang selalu membuatku candu, seolah dunia berhenti berputar hanya
+              untuk memberiku ruang mengagumimu. Ditambah suaramu yang syahdu,
+              hatiku tidak punya pilihan lain selain luluh dan jatuh cinta
+              sedalam-dalamnya kepadamu setiap kali kita bertemu."
+            </p>
+            <div class="gallery-grid">
+              <div class="polaroid-item">
+                <img src="assets/foto6.jpeg" alt="Foto 6" />
+              </div>
+              <div class="polaroid-item">
+                <img src="assets/foto7.jpg" alt="Foto 7" />
+              </div>
+              <div class="polaroid-item">
+                <img src="assets/foto8.jpeg" alt="Foto 8" />
+              </div>
+              <div class="polaroid-item">
+                <img src="assets/foto9.jpeg" alt="Foto 9" />
+              </div>
+              <div class="polaroid-item">
+                <img src="assets/foto10.jpg" alt="Foto 10" />
+              </div>
+            </div>
+          </div>
+          <div class="story-card" id="tab2">
+            <h2>Jejak Cinta Kita</h2>
+            <p class="story-quote">
+              "Setiap detik yang aku lalui bersamamu, bukanlah sekadar waktu
+              yang berlalu begitu saja. Bagiku, setiap detiknya adalah kepingan
+              memori indah yang tersusun rapi membentuk mozaik paling sempurna
+              dalam hidupku. Aku ingin terus mengumpulkan ribuan detik lagi,
+              mengubah setiap helaan napas kita menjadi cerita yang akan kita
+              kenang dengan senyuman saat rambut kita memutih nanti."
+            </p>
+            <div class="gallery-grid">
+              <div class="polaroid-item">
+                <img src="assets/foto11.jpg" alt="Foto 11" />
+              </div>
+              <div class="polaroid-item">
+                <img src="assets/foto12.jpeg" alt="Foto 12" />
+              </div>
+              <div class="polaroid-item">
+                <img src="assets/foto13.jpg" alt="Foto 13" />
+              </div>
+              <div class="polaroid-item">
+                <img src="assets/foto14.jpeg" alt="Foto 14" />
+              </div>
+              <div class="polaroid-item">
+                <img src="assets/foto15.jpg" alt="Foto 15" />
+              </div>
+              <div class="polaroid-item">
+                <img src="assets/foto16.jpg" alt="Foto 16" />
+              </div>
+              <div class="polaroid-item">
+                <img src="assets/foto17.jpg" alt="Foto 17" />
+              </div>
+              <div class="polaroid-item">
+                <img src="assets/foto18.jpeg" alt="Foto 18" />
+              </div>
+              <div class="polaroid-item">
+                <img src="assets/foto19.jpeg" alt="Foto 19" />
+              </div>
+              <div class="polaroid-item">
+                <img src="assets/foto20.jpeg" alt="Foto 20" />
+              </div>
+              <div class="polaroid-item">
+                <img src="assets/foto21.jpeg" alt="Foto 21" />
+              </div>
+              <div class="polaroid-item">
+                <img src="assets/foto22.jpeg" alt="Foto 22" />
+              </div>
+              <div class="polaroid-item">
+                <img src="assets/foto23.jpeg" alt="Foto 23" />
+              </div>
+              <div class="polaroid-item">
+                <img src="assets/foto24.jpeg" alt="Foto 24" />
+              </div>
+              <div class="polaroid-item">
+                <img src="assets/foto25.jpeg" alt="Foto 25" />
+              </div>
+            </div>
+          </div>
+          <div class="story-card" id="tab3">
+            <h2>Surat Untukmu</h2>
+            <div class="letter-paper" id="finalPaper"></div>
+          </div>
+          <div style="margin-top: 20px">
+            <button id="navBtn" onclick="nextTab()">
+              Lanjut Kisah <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="js/script.js"></script>
+  </body>
+</html>
