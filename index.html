@@ -91,6 +91,64 @@
           </button>
         </div>
       </section>
+      <section id="candle-section">
+        <div class="candle-container">
+          <h2>Make a Wish ✨</h2>
+          <p style="margin-bottom: 30px">
+            Pejamkan mata mbul, ucapkan harapan buat kedepannya, lalu tiup
+            lilinnya (atau klik tombol)!
+          </p>
+
+          <div class="cake">
+            <div class="plate"></div>
+            <div class="layer layer-bottom"></div>
+            <div class="layer layer-middle"></div>
+            <div class="layer layer-top"></div>
+            <div class="icing"></div>
+            <div class="drip drip1"></div>
+            <div class="drip drip2"></div>
+            <div class="drip drip3"></div>
+
+            <div class="candle-number-container">
+              <div class="candle-num">
+                <span class="number-text">2</span>
+                <div class="flame" id="flame1"></div>
+              </div>
+
+              <div class="candle-num">
+                <span class="number-text">0</span>
+                <div class="flame" id="flame2"></div>
+              </div>
+
+              <div class="smoke" id="smoke"></div>
+            </div>
+          </div>
+          <div style="margin-top: 50px; text-align: center">
+            <button
+              id="micBtn"
+              onclick="initMic()"
+              style="
+                font-size: 0.9rem;
+                margin-bottom: 10px;
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid white;
+              ">
+              <i class="fas fa-microphone"></i> Aktifkan Mic untuk Meniup
+            </button>
+
+            <button id="blowBtn" onclick="blowCandle()">
+              Tiup Lilinnya 💨
+            </button>
+
+            <button
+              id="nextAfterCandle"
+              class="hidden"
+              onclick="finishCandle()">
+              Lanjut <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
       <section id="envelope">
         <h2 style="margin-bottom: 20px; margin-top: -80px">
           Spesial buat kamu sayang

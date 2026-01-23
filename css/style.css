@@ -470,3 +470,272 @@ section::-webkit-scrollbar,
 main::-webkit-scrollbar {
   display: none;
 }
+/* ================= CAKE & CANDLE ANIMATION ================= */
+.candle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Kue Sederhana */
+.cake {
+  position: relative;
+  width: 250px;
+  height: 200px;
+  margin-top: 20px;
+}
+.plate {
+  position: absolute;
+  bottom: 0;
+  left: -10px;
+  width: 270px;
+  height: 110px;
+  background: #ccc;
+  border-radius: 50%;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+.layer {
+  position: absolute;
+  width: 250px;
+  height: 100px;
+  border-radius: 50%;
+  background: var(--primary);
+  z-index: 2;
+}
+.layer-bottom {
+  bottom: 15px;
+  background: #9e2a46;
+  height: 120px;
+} /* Warna Gelap */
+.layer-middle {
+  bottom: 45px;
+  background: #d64a6e;
+  height: 110px;
+  z-index: 3;
+}
+.layer-top {
+  bottom: 80px;
+  background: #ff3b6c;
+  height: 100px;
+  z-index: 4;
+}
+
+.icing {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 250px;
+  height: 100px;
+  background: #fff0f5;
+  border-radius: 50%;
+  z-index: 5;
+  box-shadow: inset 0 -5px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Lelehan Krim */
+.drip {
+  position: absolute;
+  top: 65px;
+  background: #fff0f5;
+  width: 40px;
+  height: 50px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  z-index: 4;
+}
+.drip1 {
+  left: 20px;
+  height: 40px;
+}
+.drip2 {
+  left: 90px;
+  height: 60px;
+}
+.drip3 {
+  left: 180px;
+  height: 35px;
+}
+
+/* Lilin */
+.candle {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 80px;
+  background: repeating-linear-gradient(
+    45deg,
+    #fff,
+    #fff 5px,
+    var(--gold) 5px,
+    var(--gold) 10px
+  );
+  border-radius: 4px;
+  z-index: 6;
+}
+.candle::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 10px;
+  background: #333;
+}
+
+/* Api */
+.flame {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 30px;
+  background: radial-gradient(ellipse at bottom, #ffd700, orange, transparent);
+  border-radius: 50% 50% 20% 20%;
+  animation: flicker 1s infinite alternate;
+  filter: drop-shadow(0 0 10px gold);
+  opacity: 1;
+  transition: 0.5s;
+}
+
+/* Asap (Awalnya hidden) */
+.smoke {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+  opacity: 0;
+  filter: blur(5px);
+}
+.smoke.active {
+  animation: smokeUp 2s forwards;
+}
+
+@keyframes flicker {
+  0% {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+  20% {
+    transform: translateX(-52%) scale(1.1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateX(-48%) scale(0.9);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes smokeUp {
+  0% {
+    opacity: 0.8;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-60%) translateY(-50px) scale(3);
+  }
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ================= TAMBAHAN PENTING (Agar Lilin Bisa Mati) ================= */
+
+/* Kondisi saat api mati (Class ini akan ditambahkan lewat JS) */
+.flame.out {
+  opacity: 0 !important;
+  transform: translateX(-50%) scale(0); /* Api mengecil sampai hilang */
+  animation: none; /* Stop goyang-goyang */
+}
+
+/* Pastikan asap terlihat saat class active muncul */
+.smoke.active {
+  opacity: 1 !important;
+  animation: smokeUp 2s forwards;
+}
+
+/* ================= LILIN ANGKA 20 ================= */
+
+/* Wadah agar angka 2 dan 0 sejajar */
+.candle-number-container {
+  position: absolute;
+  top: 0px; /* Naikkan posisinya ke atas kue */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px; /* Jarak antara angka 2 dan 0 */
+  z-index: 6;
+}
+
+/* Style untuk Angkanya */
+.candle-num {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.number-text {
+  font-family: "Arial", sans-serif; /* Font tebal */
+  font-weight: bold;
+  font-size: 60px; /* Ukuran Lilin */
+  color: var(--gold); /* Warna Emas */
+  text-shadow: 2px 2px 0px #d4af37, /* Efek 3D */ 4px 4px 5px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(to bottom, #ffd700, #ffec8b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+}
+
+/* Posisi Api (Disesuaikan untuk di atas angka) */
+.flame {
+  position: absolute;
+  top: -15px; /* Geser api ke pucuk angka */
+  width: 15px;
+  height: 25px;
+  background: radial-gradient(ellipse at bottom, #ffd700, orange, transparent);
+  border-radius: 50% 50% 20% 20%;
+  animation: flicker 1s infinite alternate;
+  filter: drop-shadow(0 0 10px gold);
+  opacity: 1;
+  transition: 0.5s;
+}
+
+/* Class untuk mematikan api (JS) */
+.flame.out {
+  opacity: 0 !important;
+  transform: scale(0);
+}
+
+/* Posisi Asap */
+.smoke {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+  opacity: 0;
+  filter: blur(5px);
+  pointer-events: none;
+}
+.smoke.active {
+  animation: smokeUp 2s forwards;
+  opacity: 1 !important;
+}

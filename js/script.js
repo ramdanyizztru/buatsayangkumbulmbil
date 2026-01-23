@@ -100,10 +100,12 @@ document.getElementById("pass").addEventListener("keypress", function (e) {
 function checkPass() {
   const val = document.getElementById("pass").value;
   if (val === SECRET_CODE) {
-    next("envelope");
+    // UBAH DARI "envelope" MENJADI "candle-section"
+    next("candle-section");
     tryMusic();
     createHearts(window.innerWidth / 2, window.innerHeight / 2);
   } else {
+    // ... (kode error tetap sama) ...
     const err = document.getElementById("err");
     err.style.opacity = 1;
     const input = document.getElementById("pass");
@@ -254,3 +256,108 @@ document.addEventListener("click", (e) => {
   if (e.target.tagName !== "INPUT" && e.target.tagName !== "BUTTON")
     createHearts(e.clientX, e.clientY);
 });
+
+/* ================= CANDLE & MICROPHONE LOGIC ================= */
+let audioContext;
+let analyser;
+let microphone;
+let isBlowing = false;
+
+// 1. Inisialisasi Microphone
+function initMic() {
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then(function (stream) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioContext.createAnalyser();
+        microphone = audioContext.createMediaStreamSource(stream);
+        microphone.connect(analyser);
+        analyser.fftSize = 256;
+
+        // Ubah teks tombol jadi "Mendengarkan..."
+        document.getElementById("micBtn").innerHTML =
+          "<i class='fas fa-check'></i> Mic Aktif! Tiup Sekarang";
+        document.getElementById("micBtn").style.background = "#2ecc71";
+
+        // Mulai loop deteksi suara
+        detectBlow();
+      })
+      .catch(function (err) {
+        alert(
+          "Gagal akses mic (mungkin perlu HTTPS atau izin browser). Gunakan tombol manual ya!"
+        );
+        console.log(err);
+      });
+  } else {
+    alert("Browser kamu tidak support mic. Gunakan tombol manual saja.");
+  }
+}
+
+// 2. Loop Deteksi Tiupan
+function detectBlow() {
+  if (isBlowing) return; // Stop jika lilin sudah mati
+
+  const bufferLength = analyser.frequencyBinCount;
+  const dataArray = new Uint8Array(bufferLength);
+  analyser.getByteFrequencyData(dataArray);
+
+  // Hitung rata-rata volume suara
+  let sum = 0;
+  for (let i = 0; i < bufferLength; i++) {
+    sum += dataArray[i];
+  }
+  let average = sum / bufferLength;
+
+  // JIKA SUARA KERAS (Tiupan) TERDETEKSI (Threshold: 40)
+  // Anda bisa naikkan angka 40 jika terlalu sensitif
+  if (average > 40) {
+    blowCandle();
+  } else {
+    requestAnimationFrame(detectBlow);
+  }
+}
+
+// 3. Eksekusi Tiup Lilin (Animasi Mati)
+// GANTI FUNGSI blowCandle DENGAN INI
+function blowCandle() {
+  if (isBlowing) return;
+  isBlowing = true;
+
+  // Ambil elemen
+  const flame1 = document.getElementById("flame1");
+  const flame2 = document.getElementById("flame2");
+  const smoke = document.getElementById("smoke");
+
+  // 1. Matikan KEDUA Api
+  if (flame1) flame1.classList.add("out");
+  if (flame2) flame2.classList.add("out");
+
+  // 2. Munculkan Asap
+  if (smoke) smoke.classList.add("active");
+
+  // 3. Sembunyikan tombol (mic/manual)
+  const micBtn = document.getElementById("micBtn");
+  const blowBtn = document.getElementById("blowBtn");
+  if (micBtn) micBtn.style.display = "none";
+  if (blowBtn) blowBtn.style.display = "none";
+
+  // 4. Matikan Mic
+  if (audioContext && audioContext.state !== "closed") {
+    audioContext.close();
+  }
+
+  // 5. Munculkan tombol lanjut
+  setTimeout(() => {
+    const nextBtn = document.getElementById("nextAfterCandle");
+    if (nextBtn) {
+      nextBtn.classList.remove("hidden");
+      nextBtn.style.display = "inline-block";
+      createHearts(window.innerWidth / 2, window.innerHeight / 2);
+    }
+  }, 1000);
+}
+// 4. Pindah ke Amplop
+function finishCandle() {
+  next("envelope");
+}
