@@ -1,4 +1,4 @@
-const targetDate = new Date("Jan 26, 2026 00:00:00").getTime();
+const targetDate = new Date("Jan 24, 2026 00:00:00").getTime();
 const SECRET_CODE = "2601";
 let curTab = 0;
 const totalTabs = 4;
